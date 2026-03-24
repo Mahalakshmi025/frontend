@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: expense
+  labels: # these are replicaset labels
+    app: frontend
+    tier: web
+    project: expense
+spec:
+  # modify replicas according to your case
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    # these are used to select the pod to create replicas
+    matchLabels:
+      app: frontend
+      tier: web
+      project: expense
+  # this is pod definition
+  template:
+    metadata:
+      # these labels belongs to pod
+      labels:
+        app: frontend
+        tier: web
+        project: expense
+    spec:
+      containers:
+      - name: frontend
+        image: pmahalakshmi25/frontend:{{ .Values.deployment.imageVersion }}
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+          #limits sholud be greater than or equal to requests
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
