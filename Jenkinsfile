@@ -46,7 +46,8 @@ pipeline {
                         aws eks update-kubeconfig --region ${region} --name ${project}-${environment}
                         cd helm
                         sed -i 's/IMAGE_VERSION/${appVersion}/g' values-${environment}.yaml
-                        helm upgrade --install ${component} -n ${project} -f values-${environment}.yaml . --replace
+                        kubectl delete targetgroupbinding ${component} -n ${project} || true
+                        helm upgrade --install ${component} -n ${project} -f values-${environment}.yaml . 
 
                     """
                 }
