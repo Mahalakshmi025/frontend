@@ -1,0 +1,13 @@
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: frontend
+  namespace: expense
+spec:
+  serviceRef:
+    name: frontend # route traffic to the frontend service
+    port: 80
+  ##targetGroupARN and vpcID are mutually exclusive, you can use either of them. If you want to use existing target group, then use targetGroupARN, if you want to create new target group then use vpcID
+  targetGroupARN: {{ .Values.tgb.arn }}
+  #vpcID: vpc-0628a2044d59f254b
+  targetType: ip
