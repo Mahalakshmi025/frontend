@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: pmahalakshmi25/frontend:{{ .Values.deployment.imageVersion }}
+        image: "{{ .Values.deployment.imageURL }}:{{ .Values.deployment.imageVersion }}"
         resources:
           limits:
             memory: "128Mi"
